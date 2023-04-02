@@ -13,9 +13,16 @@ func (u *usecase) AddCashToCashRegister(cr models.CashRegister) *utils.ErrorMess
 			ErrorCode: models.ErrorCashRegisterGeneral, Error: err.Error(), Success: false})
 	}
 	if len(oldCR.BankNoteAndCoins) == 0 {
-		oldCR.BankNoteAndCoins = make([]models.BankNoteAndCoin, len(models.CashRegisterIndexMap))
-	}
+		for _, value := range models.CashRegisterBankNotes {
+			cri := models.CashRegisterIndexMap[value]
 
+			oldCR.BankNoteAndCoins = append(oldCR.BankNoteAndCoins, models.BankNoteAndCoin{
+				MaxQuantity: cri.MaxQuantity,
+				Value:       cri.Value,
+				Index:       cri.Index,
+			})
+		}
+	}
 	for _, bankNoteAndCoin := range cr.BankNoteAndCoins {
 		if _, found := models.CashRegisterIndexMap[bankNoteAndCoin.Value]; !found {
 			return utils.HandleError(utils.ErrorMessage{StatusCode: http.StatusMethodNotAllowed,
