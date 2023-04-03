@@ -91,7 +91,7 @@ For more unit-test (Makefile)
 - make [command]
 
 -------------------------------------
-Hope you enjoy this test if you got any problem
+Hope you enjoy this test if you got any problems
 Just let me know
 tattapong.kun@gmail.com
 +66896361559
